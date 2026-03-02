@@ -100,9 +100,10 @@ namespace Screenbox.Controls
 
         private void SelectAlternatePlaybackSpeedItem(double playbackSpeed)
         {
+            var playbackSpeedFlyout = (MenuFlyout)Resources["PlaybackSpeedFlyout"];
             bool isMenuValue = (int)(playbackSpeed * 100) % 25 == 0;
             if (isMenuValue &&
-                PlaybackSpeedSubMenu.Items?.FirstOrDefault(x =>
+                playbackSpeedFlyout.Items?.FirstOrDefault(x =>
                         x.Tag is double predefinedSpeed && Math.Abs(predefinedSpeed - playbackSpeed) < 0.0001) is
                     RadioMenuFlyoutItem matchItem)
             {

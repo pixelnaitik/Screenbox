@@ -2,6 +2,8 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LibVLCSharp.Shared;
+using Screenbox.Core.Contexts;
 using Screenbox.Core.Enums;
 using Screenbox.Core.Services;
 using System;
@@ -26,13 +28,15 @@ namespace Screenbox.Core.ViewModels
 
         private readonly IFilesService _filesService;
         private readonly IResourceService _resourceService;
+        private readonly PlayerContext _playerContext;
         private StorageFile? _mediaFile;
         private Uri? _mediaUri;
 
-        public PropertyViewModel(IFilesService filesService, IResourceService resourceService)
+        public PropertyViewModel(IFilesService filesService, IResourceService resourceService, PlayerContext playerContext)
         {
             _filesService = filesService;
             _resourceService = resourceService;
+            _playerContext = playerContext;
             MediaProperties = new Dictionary<string, string>();
             VideoProperties = new Dictionary<string, string>();
             AudioProperties = new Dictionary<string, string>();
@@ -83,6 +87,7 @@ namespace Screenbox.Core.ViewModels
                     break;
             }
 
+            ExtractAdvancedMediaInfo();
 
             switch (media.Source)
             {
@@ -156,6 +161,36 @@ namespace Screenbox.Core.ViewModels
             readable = (readable / 1024);
             // Return formatted number with suffix
             return readable.ToString("0.## ") + suffix;
+        }
+
+        private void ExtractAdvancedMediaInfo()
+        {
+            if (_playerContext.MediaPlayer?.PlaybackItem?.Media == null) return;
+
+            var tracks = _playerContext.MediaPlayer.PlaybackItem.Media.Tracks;
+            foreach (var track in tracks)
+            {
+                if (track.TrackType == TrackType.Video)
+                {
+                    VideoProperties["Codec"] = GetFourccString(track.Codec);
+                    if (track.Data.Video.FrameRateDen > 0)
+                    {
+                        VideoProperties["Frame Rate"] = (track.Data.Video.FrameRateNum / (double)track.Data.Video.FrameRateDen).ToString("0.##") + " fps";
+                    }
+                }
+                else if (track.TrackType == TrackType.Audio)
+                {
+                    AudioProperties["Codec"] = GetFourccString(track.Codec);
+                    AudioProperties["Channels"] = track.Data.Audio.Channels.ToString();
+                    AudioProperties["Sample Rate"] = $"{track.Data.Audio.Rate} Hz";
+                }
+            }
+        }
+
+        private static string GetFourccString(uint fourcc)
+        {
+            byte[] bytes = BitConverter.GetBytes(fourcc);
+            return System.Text.Encoding.ASCII.GetString(bytes);
         }
     }
 }

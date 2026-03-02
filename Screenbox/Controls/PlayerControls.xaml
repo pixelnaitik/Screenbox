@@ -24,14 +24,15 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Preset values for playback speed options  -->
-            <x:Double x:Key="Speed025">0.25</x:Double>
             <x:Double x:Key="Speed050">0.5</x:Double>
-            <x:Double x:Key="Speed075">0.75</x:Double>
             <x:Double x:Key="Speed100">1.0</x:Double>
             <x:Double x:Key="Speed125">1.25</x:Double>
             <x:Double x:Key="Speed150">1.5</x:Double>
-            <x:Double x:Key="Speed175">1.75</x:Double>
             <x:Double x:Key="Speed200">2.0</x:Double>
+            <x:Double x:Key="Speed225">2.25</x:Double>
+            <x:Double x:Key="Speed250">2.5</x:Double>
+            <x:Double x:Key="Speed275">2.75</x:Double>
+            <x:Double x:Key="Speed300">3.0</x:Double>
 
             <converters:ToggleButtonCheckToRepeatModeConverter x:Key="ToggleButtonCheckToRepeatModeConverter" />
 
@@ -56,7 +57,7 @@
                         x:Name="SpeedSlider"
                         Header="{strings:Resources Key=CustomPlaybackSpeed}"
                         IsThumbToolTipEnabled="False"
-                        Maximum="2"
+                        Maximum="3.5"
                         Minimum="0.05"
                         SmallChange="0.01"
                         StepFrequency="0.05"
@@ -115,6 +116,79 @@
                 </StackPanel>
             </Flyout>
 
+            <MenuFlyout x:Key="PlaybackSpeedFlyout" Placement="Top">
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed05MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed05MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed050}"
+                    Text="0.5 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed1MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed1MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    IsChecked="True"
+                    Tag="{StaticResource Speed100}"
+                    Text="1 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed125MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed125MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed125}"
+                    Text="1.25 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed15MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed15MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed150}"
+                    Text="1.5 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed2MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed2MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed200}"
+                    Text="2 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed225MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed225MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed225}"
+                    Text="2.25 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed25MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed25MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed250}"
+                    Text="2.5 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed275MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed275MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed275}"
+                    Text="2.75 ×" />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="PlaybackSpeed3MenuItem"
+                    Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
+                    CommandParameter="{x:Bind PlaybackSpeed3MenuItem.Tag}"
+                    GroupName="SpeedGroup"
+                    Tag="{StaticResource Speed300}"
+                    Text="3 ×" />
+                <MenuFlyoutSeparator />
+                <muxc:RadioMenuFlyoutItem
+                    x:Name="CustomPlaybackSpeedMenuItem"
+                    Click="CustomSpeedMenuItem_OnClick"
+                    GroupName="SpeedGroup"
+                    Text="{strings:Resources Key=Custom}" />
+            </MenuFlyout>
+
             <MenuFlyout x:Key="NormalPlayerContextMenu">
                 <MenuFlyoutItem
                     AccessKey="{strings:KeyboardResources Key=MenuItemFileKey}"
@@ -139,78 +213,18 @@
                         <KeyboardAccelerator Key="I" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutSubItem
-                    x:Name="PlaybackSpeedSubMenu"
-                    AccessKey="{strings:KeyboardResources Key=MenuItemSpeedKey}"
-                    KeyTipPlacementMode="Left"
-                    Text="{x:Bind strings:Resources.PlaybackSpeed}">
-                    <MenuFlyoutSubItem.Icon>
-                        <FontIcon FontFamily="{StaticResource ScreenboxSymbolThemeFontFamily}" Glyph="{x:Bind converters:GlyphConverter.ToSpeedGlyph(ViewModel.PlaybackSpeed), Mode=OneWay}" />
-                    </MenuFlyoutSubItem.Icon>
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed025MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed025MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed025}"
-                        Text="0.25 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed05MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed05MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed050}"
-                        Text="0.5 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed075MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed075MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed075}"
-                        Text="0.75 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed1MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed1MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        IsChecked="True"
-                        Tag="{StaticResource Speed100}"
-                        Text="1 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed125MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed125MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed125}"
-                        Text="1.25 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed15MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed15MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed150}"
-                        Text="1.5 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed175MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed175MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed175}"
-                        Text="1.75 ×" />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="PlaybackSpeed2MenuItem"
-                        Command="{x:Bind ViewModel.SetPlaybackSpeedCommand}"
-                        CommandParameter="{x:Bind PlaybackSpeed2MenuItem.Tag}"
-                        GroupName="SpeedGroup"
-                        Tag="{StaticResource Speed200}"
-                        Text="2 ×" />
-                    <MenuFlyoutSeparator />
-                    <muxc:RadioMenuFlyoutItem
-                        x:Name="CustomPlaybackSpeedMenuItem"
-                        Click="CustomSpeedMenuItem_OnClick"
-                        GroupName="SpeedGroup"
-                        Text="{strings:Resources Key=Custom}" />
-                </MenuFlyoutSubItem>
+                <ToggleMenuFlyoutItem
+                    x:Name="ShuffleMenuItem"
+                    AccessKey="{strings:KeyboardResources Key=PlayerShuffleKey}"
+                    IsChecked="{x:Bind ViewModel.Playlist.ShuffleMode, Mode=TwoWay}"
+                    Text="{x:Bind strings:Resources.ShuffleMode(ViewModel.Playlist.ShuffleMode), Mode=OneWay}">
+                    <ToggleMenuFlyoutItem.Icon>
+                        <FontIcon FontFamily="{StaticResource ScreenboxSymbolThemeFontFamily}" Glyph="{x:Bind converters:GlyphConverter.ToShuffleGlyph(ViewModel.Playlist.ShuffleMode), Mode=OneWay}" />
+                    </ToggleMenuFlyoutItem.Icon>
+                    <ToggleMenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Control" />
+                    </ToggleMenuFlyoutItem.KeyboardAccelerators>
+                </ToggleMenuFlyoutItem>
                 <MenuFlyoutItem
                     AccessKey="{strings:KeyboardResources Key=MenuItemSaveSnapshotKey}"
                     Command="{x:Bind ViewModel.SaveSnapshotCommand}"
@@ -461,21 +475,18 @@
                 Margin="0,0,8,0"
                 ShowValueText="False"
                 VolumeToggleButtonStyle="{StaticResource PlayerToggleButtonStyle}" />
-            <!--  Shuffle  -->
-            <ToggleButton
-                x:Name="ShuffleButton"
+            <!--  Playback speed  -->
+            <Button
+                x:Name="PlaybackSpeedButton"
                 Margin="0,0,4,0"
-                extensions:AcceleratorService.ToolTip="{x:Bind strings:Resources.ShuffleMode(ViewModel.Playlist.ShuffleMode), Mode=OneWay}"
-                AccessKey="{strings:KeyboardResources Key=PlayerShuffleKey}"
-                AutomationProperties.Name="{x:Bind ShuffleButton.(extensions:AcceleratorService.ToolTip), Mode=OneWay}"
-                IsChecked="{x:Bind ViewModel.Playlist.ShuffleMode, Mode=TwoWay}"
+                extensions:AcceleratorService.ToolTip="{x:Bind strings:Resources.PlaybackSpeed}"
+                AccessKey="{strings:KeyboardResources Key=MenuItemSpeedKey}"
+                AutomationProperties.Name="{x:Bind PlaybackSpeedButton.(extensions:AcceleratorService.ToolTip), Mode=OneWay}"
+                Flyout="{StaticResource PlaybackSpeedFlyout}"
                 IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                Style="{StaticResource PlayerToggleButtonStyle}">
-                <FontIcon FontFamily="{StaticResource ScreenboxSymbolThemeFontFamily}" Glyph="{x:Bind converters:GlyphConverter.ToShuffleGlyph(ViewModel.Playlist.ShuffleMode), Mode=OneWay}" />
-                <ToggleButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="S" Modifiers="Control" />
-                </ToggleButton.KeyboardAccelerators>
-            </ToggleButton>
+                Style="{StaticResource PlayerButtonStyle}">
+                <FontIcon FontFamily="{StaticResource ScreenboxSymbolThemeFontFamily}" Glyph="{x:Bind converters:GlyphConverter.ToSpeedGlyph(ViewModel.PlaybackSpeed), Mode=OneWay}" />
+            </Button>
             <!--  Repeat  -->
             <ToggleButton
                 x:Name="RepeatButton"
@@ -600,7 +611,7 @@
                         <Setter Target="CompactOverlayMenuItemKeyboardAccelerator.IsEnabled" Value="True" />
                     </VisualState.Setters>
                     <Storyboard>
-                        <RepositionThemeAnimation FromHorizontalOffset="-100" TargetName="ShuffleButton" />
+                        <RepositionThemeAnimation FromHorizontalOffset="-100" TargetName="PlaybackSpeedButton" />
                         <RepositionThemeAnimation FromHorizontalOffset="-100" TargetName="RepeatButton" />
                         <RepositionThemeAnimation FromHorizontalOffset="-100" TargetName="VolumeButton" />
                     </Storyboard>
@@ -640,7 +651,7 @@
                         <Setter Target="TimeDisplay.Margin" Value="4,0,0,0" />
                         <Setter Target="TimeDisplay.FontSize" Value="13" />
                         <Setter Target="RepeatButton.Visibility" Value="Collapsed" />
-                        <Setter Target="ShuffleButton.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaybackSpeedButton.Visibility" Value="Collapsed" />
                         <Setter Target="CompactOverlayButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
                         <Setter Target="CompactOverlayButtonIcon.Glyph" Value="{StaticResource MiniExpand2MirroredGlyph}" />
                         <Setter Target="MoreButton.Visibility" Value="Collapsed" />
@@ -660,7 +671,7 @@
                         <Setter Target="NextButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
                         <Setter Target="VolumeButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
                         <Setter Target="VolumeControl.VolumeToggleButtonStyle" Value="{StaticResource SmallPlayerToggleButtonStyle}" />
-                        <Setter Target="ShuffleButton.Style" Value="{StaticResource SmallPlayerToggleButtonStyle}" />
+                        <Setter Target="PlaybackSpeedButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
                         <Setter Target="RepeatButton.Style" Value="{StaticResource SmallPlayerToggleButtonStyle}" />
                         <Setter Target="AudioAndCaptionButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
                         <Setter Target="CompactOverlayButton.Style" Value="{StaticResource SmallPlayerButtonStyle}" />
