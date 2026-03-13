@@ -257,7 +257,13 @@
                 <Frame
                     x:Name="ContentFrame"
                     Navigated="ContentFrame_Navigated"
-                    NavigationFailed="ContentFrame_NavigationFailed" />
+                    NavigationFailed="ContentFrame_NavigationFailed">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition />
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
 
                 <controls:NotificationView
                     x:Name="NotificationView"

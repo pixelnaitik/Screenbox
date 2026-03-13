@@ -97,6 +97,13 @@
                     Loaded="ArtistGridView_OnLoaded"
                     ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                     SelectionMode="None">
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                            <ReorderThemeTransition />
+                            <RepositionThemeTransition IsStaggeringEnabled="False" />
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
                     <GridView.GroupStyle>
                         <GroupStyle
                             HeaderContainerStyle="{StaticResource MediaGridViewHeaderItemStyle}"
@@ -123,6 +130,13 @@
                     ItemTemplate="{StaticResource GroupOverviewLetterItemTemplate}"
                     ItemsSource="{x:Bind ArtistsSource.View.CollectionGroups}"
                     SelectionMode="None">
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                            <ReorderThemeTransition />
+                            <RepositionThemeTransition IsStaggeringEnabled="False" />
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
                     <GridView.Resources>
                         <StaticResource x:Key="ButtonBackgroundDisabled" ResourceKey="ControlFillColorTransparentBrush" />
                         <StaticResource x:Key="ButtonBorderBrushDisabled" ResourceKey="ControlFillColorTransparentBrush" />

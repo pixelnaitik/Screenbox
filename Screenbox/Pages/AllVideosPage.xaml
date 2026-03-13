@@ -85,6 +85,13 @@
             ItemTemplate="{StaticResource WideMediaGridViewItemTemplate}"
             ItemsSource="{x:Bind ViewModel.Videos}"
             SelectionMode="None">
+            <GridView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                    <ReorderThemeTransition />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </GridView.ItemContainerTransitions>
             <GridView.Resources>
                 <commands:BindableCommand x:Key="MediaListViewItemPlayCommand" Command="{x:Bind ViewModel.PlayCommand}" />
             </GridView.Resources>
